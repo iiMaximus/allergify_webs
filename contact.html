@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact – Allergify</title>
+    <meta name="description" content="Send us feedback, report bugs, or request features for Allergify.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/png" href="assets/appicon48.png">
+    <style>
+        /* ---- Contact Page Specific ---- */
+        .contact-page {
+            padding-top: calc(var(--nav-height) + var(--space-16));
+            padding-bottom: var(--space-16);
+            min-height: 100vh;
+            background: var(--color-bg);
+        }
+
+        .contact-page .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-8);
+            transition: color var(--transition-fast);
+        }
+
+        .contact-page .back-link:hover {
+            color: var(--color-primary);
+        }
+
+        .contact-card {
+            max-width: 600px;
+            background: var(--color-white);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-12);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--color-border);
+        }
+
+        .contact-card-header {
+            text-align: center;
+            margin-bottom: var(--space-10);
+        }
+
+        .contact-card-header img {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            margin: 0 auto var(--space-6);
+        }
+
+        .contact-card-header h1 {
+            font-size: var(--font-size-3xl);
+            font-weight: 800;
+            color: var(--color-black);
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-2);
+        }
+
+        .contact-card-header p {
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Form */
+        .contact-form .form-group {
+            margin-bottom: var(--space-6);
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: var(--space-2);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            width: 100%;
+            padding: var(--space-4);
+            border-radius: var(--radius-lg);
+            border: 1.5px solid var(--color-border);
+            background: var(--color-bg);
+            font-size: var(--font-size-base);
+            font-family: var(--font-family);
+            color: var(--color-text);
+            transition: border-color var(--transition-fast), background var(--transition-fast);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus,
+        .contact-form select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            background: var(--color-white);
+        }
+
+        .contact-form textarea {
+            min-height: 140px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .contact-form select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236B7280' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 6l3.5 4 3.5-4H4.5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            cursor: pointer;
+        }
+
+        .contact-form .btn-submit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            width: 100%;
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-xl);
+            background: var(--color-black);
+            color: var(--color-white);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            font-family: var(--font-family);
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            margin-top: var(--space-4);
+        }
+
+        .contact-form .btn-submit:hover {
+            background: #1a1a1a;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Success state */
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: var(--space-12) var(--space-8);
+        }
+
+        .form-success.show {
+            display: block;
+        }
+
+        .form-success .success-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--color-accent-light);
+            color: var(--color-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-6);
+        }
+
+        .form-success .success-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .form-success h3 {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--color-black);
+            margin-bottom: var(--space-2);
+        }
+
+        .form-success p {
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+        }
+
+        .feedback-form-container.hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ======== NAVIGATION ======== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="/" class="nav-logo">
+                <img src="assets/appicon48.png" alt="Allergify" class="nav-logo-img">
+                Allergify
+            </a>
+
+            <div class="nav-links" id="nav-links">
+                <a href="/#features">Features</a>
+                <a href="/#how-it-works">How It Works</a>
+                <a href="/#pricing">Premium</a>
+                <a href="privacy-policy.html">Privacy</a>
+                <a href="terms-of-service.html">Terms</a>
+            </div>
+
+            <div class="nav-cta">
+                <a href="https://apps.apple.com/us/app/food-scanner-allergify/id6755896152"
+                    aria-label="Download on the App Store">
+                    <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                        alt="Download on the App Store" class="store-badge">
+                </a>
+            </div>
+
+            <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ======== CONTACT FORM ======== -->
+    <main class="contact-page">
+        <div class="container">
+            <a href="/" class="back-link">← Back to Home</a>
+
+            <div class="contact-card">
+                <div class="feedback-form-container" id="feedback-form-container">
+                    <div class="contact-card-header">
+                        <img src="assets/allergify_happy_chick_logo.png" alt="Allergify mascot">
+                        <h1>Share Your Feedback</h1>
+                        <p>Help us improve Allergify! Report bugs, request features, or just say hi.</p>
+                    </div>
+
+                    <form class="contact-form" id="feedback-form">
+                        <div class="form-group">
+                            <label for="feedback-name">Name (Optional)</label>
+                            <input type="text" id="feedback-name" placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback-email">Email (Optional)</label>
+                            <input type="email" id="feedback-email" placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback-type">Feedback Type</label>
+                            <select id="feedback-type" required>
+                                <option value="">Select type…</option>
+                                <option value="bug">Bug Report</option>
+                                <option value="feature">Feature Request</option>
+                                <option value="improvement">Improvement Suggestion</option>
+                                <option value="general">General Feedback</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback-message">Message *</label>
+                            <textarea id="feedback-message" placeholder="Tell us what you think…" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Submit Feedback</button>
+                    </form>
+                </div>
+
+                <div class="form-success" id="feedback-success">
+                    <div class="success-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3>Thank You!</h3>
+                    <p>Your feedback has been received. We appreciate your input!</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ======== FOOTER ======== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="assets/appicon48.png" alt="Allergify" class="footer-logo-img">
+                        <h3>Allergify</h3>
+                    </div>
+                    <p>Scan barcodes. Detect allergens. Eat with confidence. The smartest way to stay safe with every
+                        bite.</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="/#features">Features</a>
+                    <a href="/#how-it-works">How It Works</a>
+                    <a href="/#pricing">Premium</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Download</h4>
+                    <a href="https://apps.apple.com/us/app/food-scanner-allergify/id6755896152">App Store</a>
+                    <span class="coming-soon-text">Google Play — Coming Soon</span>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2025 Allergify. All rights reserved.</span>
+                <div>
+                    <a href="privacy-policy.html">Privacy</a> · <a href="terms-of-service.html">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        const feedbackForm = document.getElementById('feedback-form');
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                document.getElementById('feedback-form-container').classList.add('hidden');
+                document.getElementById('feedback-success').classList.add('show');
+
+                setTimeout(() => {
+                    feedbackForm.reset();
+                    document.getElementById('feedback-form-container').classList.remove('hidden');
+                    document.getElementById('feedback-success').classList.remove('show');
+                }, 3000);
+            });
+        }
+    </script>
+</body>
+
+</html>
